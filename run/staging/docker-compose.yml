@@ -1,0 +1,6 @@
+version: "3.9"
+services:
+  web:
+    image: fryckbos/dredge-example:0.0.2
+    ports:
+      - "8100:8000"

@@ -1,0 +1,18 @@
+resources:
+  release:
+    - provider: github-releases
+  issue:
+    - provider: github-issues
+  doc:
+    - provider: local-doc
+      config:
+        path: ./docs/
+  deploy:
+    - provider: local-docker-compose
+      config:
+        env: staging
+        path: ./run/staging/
+    - provider: local-docker-compose
+      config:
+        env: prod
+        path: ./run/prod/
