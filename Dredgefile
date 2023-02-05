@@ -12,7 +12,17 @@ resources:
       config:
         env: staging
         path: ./run/staging/
+        image: fryckbos/dredge-example
+        proto: http
     - provider: local-docker-compose
       config:
         env: prod
         path: ./run/prod/
+        image: fryckbos/dredge-example
+        proto: http
+workflows:
+  - name: build
+    description: Build the dredge-example container
+    steps:
+      - shell:
+          cmd: docker build -t fryckbos/dredge-example .
