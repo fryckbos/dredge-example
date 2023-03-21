@@ -1,0 +1,26 @@
+# Demo recording
+
+brew install asciinema
+asciinema rec
+
+asciinema rec -c "PS1='> ' BASH_SILENCE_DEPRECATION_WARNING=1 /bin/bash" -i 2 --cols 100 --rows 20
+
+# Dredge abstracts DevOps tools into actionable resources
+# get releases
+drg get release
+# search docs
+drg search doc --text "design"
+# manage deployments
+drg get deploy
+drg update deploy/local
+
+# and allows the creation of workflows using these resources
+grep 'workflows:' -A 16 Dredgefile
+drg local-latest
+
+ctrl-d
+
+Annotate the cast with '-- start typing', '-- stop typing', '-- pause'
+
+python3 edit.py > out.cast
+

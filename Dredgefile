@@ -10,8 +10,8 @@ resources:
   deploy:
     - provider: local-docker-compose
       config:
-        env: staging
-        path: ./run/staging/
+        env: local
+        path: ./run/local/
         image: fryckbos/dredge-example
         proto: http
     - provider: local-docker-compose
@@ -21,8 +21,37 @@ resources:
         image: fryckbos/dredge-example
         proto: http
 workflows:
+  - name: local-latest
+    description: deploy the latest version to local
+    steps:
+      - execute:
+          resource: release
+          command: get
+          register: releases
+      - set:
+          name: local
+          version: "{{ (index .releases 0).name }}"
+          instances: 1
+      - confirm:
+          message: Latest release is {{ .version }}, deploy to {{ .name }}?
+      - execute:
+          resource: deploy
+          command: update
   - name: build
     description: Build the dredge-example container
     steps:
       - shell:
           cmd: docker build -t fryckbos/dredge-example .
+  - name: site
+    description: Open the dredge website
+    steps:
+      - browser:
+          url: https://dredge.dev
+  - name: echo
+    description: echo an input
+    inputs:
+      - name: in
+        type: text
+    steps:
+      - shell:
+          cmd: echo {{.in}}
